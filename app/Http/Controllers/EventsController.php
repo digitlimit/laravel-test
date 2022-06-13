@@ -181,6 +181,6 @@ class EventsController extends BaseController
      */
 
     public function getFutureEventsWithWorkshops() {
-       
+       return Event::future()->get();
     }
 }

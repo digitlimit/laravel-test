@@ -31,5 +31,17 @@ class Event extends Model
         return $query->with('workshops');
     }
 
+    /**
+     * The scope for fetching all future events for an event.
+     */
+    public function scopeFuture(Builder $query)
+    {
+        return $query
+            ->join('workshops', function ($join) {
+                $join->on('events.id', '=', 'workshops.event_id');
+            })
+            ->groupBy('events.id');   
+    }
+
 }
 
