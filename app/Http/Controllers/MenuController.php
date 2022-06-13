@@ -96,8 +96,14 @@ class MenuController extends BaseController
      */
 
     public function getMenuItems() {
+
         $menuItems = MenuItem::orderBy('parent_id', 'asc')->get();
-        $menus = MenuHelper::build($menuItems->toArray());
+
+        if (!$menuItems) {
+            return response()->json([], 204);
+        }
+
+        $menus = MenuHelper::build($menuItems);
 
         return response()->json($menus);
     }

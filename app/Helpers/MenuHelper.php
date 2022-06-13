@@ -13,18 +13,30 @@ class MenuHelper
      * 
      * @return array An array of menu items.
      */
-    public static function build(array $items) : array 
+    public static function build(Collection $items) : array 
     {
-        if(!isset($parent_id)){
-            $parent_id = 0;
-        }
+        $items = $items->toArray();
+        return self::buildRecursive($items);
+    }
 
+    /**
+     * Recursive function to build the menu tree.
+     * 
+     * @param array $items The menu items
+     * @param int $parentId The parent id
+     * 
+     * @return array The menu tree
+     */ 
+    protected static function buildRecursive(array $items, $parent_id = 0) : array
+    {
+        $menus = [];
+    
         foreach ($items as $item) {
 
             if ($item['parent_id'] == $parent_id) {
                 
                 // build children for parent if exists 
-                $children = self::build($items, $item['id']);
+                $children = self::buildRecursive($items, $item['id']);
 
                 // children built, add to parent
                 if ($children) {
@@ -34,6 +46,7 @@ class MenuHelper
                 $menus[] = $item;
             }
         }
+    
+        return $menus;
     }
-
 }

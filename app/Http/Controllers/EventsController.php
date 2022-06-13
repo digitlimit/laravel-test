@@ -101,8 +101,13 @@ class EventsController extends BaseController
      */
 
     public function getEventsWithWorkshops() {
-        return Event::withWorkshops()
-            ->get();
+        $events = Event::withWorkshops()->get();
+
+        if(!$events) {
+            return response()->json([], 204);
+        }
+
+        return response()->json($events);
     }
 
 
@@ -181,6 +186,13 @@ class EventsController extends BaseController
      */
 
     public function getFutureEventsWithWorkshops() {
-       return Event::futureWithWorkshops()->get();
+       
+        $events = Event::futureWithWorkshops()->get();
+
+        if(!$events) {
+            return response()->json([], 204);
+        }
+
+       return response()->json($events);
     }
 }
