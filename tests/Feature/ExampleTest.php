@@ -51,15 +51,15 @@ class ExampleTest extends TestCase
             ->assertJsonPath('1.workshops.1.name', 'Navigating the function jungle');
     }
 
-    // public function testMenu() {
-    //     $response = $this->get('/menu');
-    //     $response->assertStatus(200)
-    //         ->assertJsonCount(1)
-    //         ->assertJsonPath('0.children.0.name', 'Laracon')
-    //         ->assertJsonPath('0.children.0.children.0.url', '/events/laracon/workshops/illuminate')
-    //         ->assertJsonPath('0.children.0.children.1.url', '/events/laracon/workshops/eloquent')
-    //         ->assertJsonPath('0.children.1.name', 'Reactcon')
-    //         ->assertJsonPath('0.children.1.children.0.url', '/events/reactcon/workshops/noclass')
-    //         ->assertJsonPath('0.children.1.children.1.url', '/events/reactcon/workshops/jungle');
-    // }
+    public function testMenu() {
+        $response = $this->get('/menu');
+        $response->assertStatus(200)
+            ->assertJsonCount(1)
+            ->assertJsonPath('0.children.0.name', 'Laracon')
+            ->assertJsonPath('0.children.0.children.0.url', '/events/laracon/workshops/illuminate')
+            ->assertJsonPath('0.children.0.children.1.url', '/events/laracon/workshops/eloquent')
+            ->assertJsonPath('0.children.1.name', 'Reactcon')
+            ->assertJsonPath('0.children.1.children.0.url', '/events/reactcon/workshops/noclass')
+            ->assertJsonPath('0.children.1.children.1.url', '/events/reactcon/workshops/jungle');
+    }
 }

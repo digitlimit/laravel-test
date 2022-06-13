@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MenuItem;
 use Illuminate\Routing\Controller as BaseController;
+use App\Helpers\MenuHelper;
 
 class MenuController extends BaseController
 {
@@ -95,6 +96,9 @@ class MenuController extends BaseController
      */
 
     public function getMenuItems() {
-        throw new \Exception('implement in coding task 3');
+        $menuItems = MenuItem::orderBy('parent_id', 'asc')->get();
+        $menus = MenuHelper::build($menuItems->toArray());
+
+        return response()->json($menus);
     }
 }
