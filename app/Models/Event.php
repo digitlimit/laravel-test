@@ -32,7 +32,11 @@ class Event extends Model
     }
 
     /**
-     * The scope for fetching all future events for an event.
+     * The scope for fetching all future events
+     * 
+     * @param  Illuminate\Database\Eloquent\Builder $query
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function scopeFuture(Builder $query)
     {
@@ -40,8 +44,23 @@ class Event extends Model
             ->join('workshops', function ($join) {
                 $join->on('events.id', '=', 'workshops.event_id');
             })
+            ->select('events.*')
+            ->havingRaw('MIN(workshops.start) > ?', [Carbon::now()])
             ->groupBy('events.id');   
     }
 
+    /**
+     * Fetch all the future events with workshops.
+     * 
+     * @param  Illuminate\Database\Eloquent\Builder $query
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scopeFutureWithWorkshops(Builder $query)
+    {
+        return $query
+            ->future()
+            ->withWorkshops();
+    }
 }
 
