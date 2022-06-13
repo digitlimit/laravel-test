@@ -9,6 +9,16 @@ use Carbon\Carbon;
 class Event extends Model
 {
     /**
+     * Fetches all events for an event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function workshops()
+    {
+        return $this->hasMany(Workshop::class);
+    }
+
+    /**
      * The scope for fetching all events for an event.
      * We defined scope for fluency and maintainability.
      * 
